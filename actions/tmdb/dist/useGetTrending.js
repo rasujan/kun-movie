@@ -38,29 +38,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var axios_1 = require("@/utils/axios");
 var react_query_1 = require("react-query");
-var getTrending = function (params) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1["default"].get("/trending/" + params.media_type + "/" + params.time_window + "?page=" + params.page)];
-            case 1:
-                data = (_a.sent()).data;
-                return [2 /*return*/, data];
-        }
-    });
-}); };
-function useGetTrending(params) {
-    var _this = this;
-    return react_query_1.useQuery(["trending", params], function () { return __awaiter(_this, void 0, void 0, function () {
+var getTrending = function (_a) {
+    var _b = _a.pageParam, pageParam = _b === void 0 ? 1 : _b;
+    return __awaiter(void 0, void 0, void 0, function () {
         var data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, getTrending(params)];
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, axios_1["default"].get("/trending/movie/week?page=" + pageParam)];
                 case 1:
-                    data = _a.sent();
+                    data = (_c.sent()).data;
                     return [2 /*return*/, data];
             }
         });
-    }); }, { keepPreviousData: true });
+    });
+};
+function useGetTrending(params) {
+    return react_query_1.useInfiniteQuery("trending", getTrending, {
+        getNextPageParam: function (lastPage, pages) { return lastPage.page + 1; }
+    });
 }
 exports["default"] = useGetTrending;

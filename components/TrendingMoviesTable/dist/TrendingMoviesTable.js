@@ -20,6 +20,7 @@ function TrendingMoviesTable(props) {
     var tableData = props.tableData;
     var columns = react_1.useMemo(function () { return columns_1.COLUMNS; }, []);
     var data = react_1.useMemo(function () { return tableData; }, []);
+    // const data = tableData;
     var tableInstance = react_table_1.useTable({
         columns: columns,
         data: data

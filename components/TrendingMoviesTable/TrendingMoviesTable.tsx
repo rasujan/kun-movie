@@ -7,6 +7,7 @@ function TrendingMoviesTable(props) {
   const { tableData } = props;
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, []);
+  // const data = tableData;
   const tableInstance = useTable(
     {
       columns,
