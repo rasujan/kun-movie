@@ -1,4 +1,5 @@
 export type trendingParamsType = {
-    media_type: string;
-    time_window: string;
-  };
+  page?: number;
+  media_type: string;
+  time_window: string;
+};

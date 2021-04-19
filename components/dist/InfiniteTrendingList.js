@@ -37,30 +37,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var axios_1 = require("@/utils/axios");
+var react_1 = require("react");
 var react_query_1 = require("react-query");
-var getTrending = function (params) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1["default"].get("/trending/" + params.media_type + "/" + params.time_window + "?page=" + params.page)];
-            case 1:
-                data = (_a.sent()).data;
-                return [2 /*return*/, data];
-        }
-    });
-}); };
-function useGetTrending(params) {
+function InfiniteTrendingList() {
     var _this = this;
-    return react_query_1.useQuery(["trending", params], function () { return __awaiter(_this, void 0, void 0, function () {
-        var data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, getTrending(params)];
-                case 1:
-                    data = _a.sent();
-                    return [2 /*return*/, data];
-            }
+    var getTrending = function (_a) {
+        var _b = _a.pageParam, pageParam = _b === void 0 ? 1 : _b;
+        return __awaiter(_this, void 0, void 0, function () {
+            var data;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, axios_1["default"].get("/trending/movie/week?page=" + pageParam)];
+                    case 1:
+                        data = (_c.sent()).data;
+                        return [2 /*return*/, data];
+                }
+            });
         });
-    }); }, { keepPreviousData: true });
+    };
+    var _a = react_query_1.useInfiniteQuery("Trendings", getTrending, {
+        getNextPageParam: function (lastPage, pages) { return lastPage.page + 1; }
+    }), data = _a.data, error = _a.error, fetchNextPage = _a.fetchNextPage, hasNextPage = _a.hasNextPage, isFetching = _a.isFetching, isFetchingNextPage = _a.isFetchingNextPage, status = _a.status;
+    return status === "loading" ? (react_1["default"].createElement("p", null, "Loading...")) : status === "error" ? (react_1["default"].createElement("p", null, "Error: Something Went Wrong")) : (react_1["default"].createElement(react_1["default"].Fragment, null,
+        data.pages.map(function (group, i) { return (react_1["default"].createElement(react_1["default"].Fragment, { key: i }, group.results.map(function (result) { return (react_1["default"].createElement("p", { key: result.id }, result.title)); }))); }),
+        react_1["default"].createElement("div", null,
+            react_1["default"].createElement("button", { onClick: function () { return fetchNextPage(); }, disabled: !hasNextPage || isFetchingNextPage }, isFetchingNextPage
+                ? "Loading more..."
+                : hasNextPage
+                    ? "Load More"
+                    : "Nothing more to load")),
+        react_1["default"].createElement("div", null, isFetching && !isFetchingNextPage ? "Fetching..." : null)));
 }
-exports["default"] = useGetTrending;
+exports["default"] = InfiniteTrendingList;

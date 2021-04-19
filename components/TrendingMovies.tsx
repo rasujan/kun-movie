@@ -1,12 +1,4 @@
-import React, { useState } from "react";
-
-//React Query
-import {
-  useQuery,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import React, { useEffect, useState } from "react";
 
 //actions
 import useGetTrending from "../actions/tmdb/useGetTrending";
@@ -17,10 +9,16 @@ import TrendingMoviesTable from "./TrendingMoviesTable/TrendingMoviesTable";
 
 function TrendingMovies() {
   const [trendingParams, setTrendingParams] = useState<trendingParamsType>({
+    page: 1,
     media_type: "movie",
     time_window: "week",
   });
-  const { status, data, error, isFetching } = useGetTrending(trendingParams);
+  console.log(
+    "🚀 ~ file: TrendingMovies.tsx ~ line 20 ~ TrendingMovies ~ trendingParams",
+    trendingParams
+  );
+  const [trendings, setTrendings] = useState([{}]);
+  const { status, data, isPreviousData } = useGetTrending(trendingParams);
 
   return (
     <div>
