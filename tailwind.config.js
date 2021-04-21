@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: { backgroundColor: ["odd"] },
+    extend: { backgroundColor: ["odd", "disabled"], opacity: ["disabled"] },
   },
   plugins: [],
 };
