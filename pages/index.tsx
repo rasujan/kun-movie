@@ -1,5 +1,5 @@
 import Head from "next/head";
-import TrendingMovies from "@/components/TrendingMovies";
+import TrendingMovieList from "@/components/TrendingMovieList";
 export default function Home() {
   return (
     <div className="">
@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
 
       <main className=""></main>
-      <TrendingMovies />
+      <TrendingMovieList />
       <footer className=""></footer>
     </div>
   );

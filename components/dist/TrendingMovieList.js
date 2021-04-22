@@ -39,6 +39,7 @@ exports.__esModule = true;
 var react_1 = require("react");
 var axios_1 = require("@/utils/axios");
 var react_query_1 = require("react-query");
+var SimpleMovieCard_1 = require("./common/SimpleMovieCard");
 function TrendingMovieList() {
     var _this = this;
     var _a = react_1["default"].useState(1), page = _a[0], setPage = _a[1];
@@ -56,27 +57,13 @@ function TrendingMovieList() {
             });
         });
     };
-    var _b = react_query_1.useQuery(["trendin movies", page], function () { return getTrending(page); }, {
+    var _b = react_query_1.useQuery(["trending movies", page], function () { return getTrending(page); }, {
         keepPreviousData: true
     }), isLoading = _b.isLoading, isError = _b.isError, error = _b.error, data = _b.data, isFetching = _b.isFetching, isPreviousData = _b.isPreviousData;
     return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("div", null,
-            isLoading ? (react_1["default"].createElement("div", null, "Loading...")) : isError ? (react_1["default"].createElement("div", null,
-                "Error: ",
-                error)) : (react_1["default"].createElement("div", null, data.results.map(function (result) { return (react_1["default"].createElement("p", { key: result.id }, result.title)); }))),
-            react_1["default"].createElement("span", null,
-                "Current Page: ",
-                page + 1),
-            react_1["default"].createElement("button", { onClick: function () { return setPage(function (old) { return Math.max(old - 1, 1); }); }, disabled: page === 1 }, "Previous Page"),
-            " ",
-            react_1["default"].createElement("button", { onClick: function () {
-                    if (!isPreviousData) {
-                        setPage(function (old) { return old + 1; });
-                    }
-                }, 
-                // Disable the Next Page button until we know a next page is available
-                disabled: isPreviousData }, "Next Page"),
-            isFetching ? react_1["default"].createElement("span", null, " Loading...") : null,
-            " ")));
+        react_1["default"].createElement("div", null, isLoading ? (react_1["default"].createElement("div", null, "Loading...")) : isError ? (react_1["default"].createElement("div", null,
+            "Error: ",
+            error)) : (react_1["default"].createElement("div", { className: "flex w-screen" }, data.results.map(function (result) { return (react_1["default"].createElement("p", { key: result.id },
+            react_1["default"].createElement(SimpleMovieCard_1["default"], { movie: result }))); }))))));
 }
 exports["default"] = TrendingMovieList;

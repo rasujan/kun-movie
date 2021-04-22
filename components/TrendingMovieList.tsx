@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "@/utils/axios";
 import { useQuery } from "react-query";
+import SimpleMovieCard from "./common/SimpleMovieCard";
 
 function TrendingMovieList() {
   const [page, setPage] = React.useState(1);
+
   const getTrending = async (page = 1) => {
     const { data } = await axios.get(`/trending/movie/week?page=${page}`);
     return data;
@@ -16,7 +18,7 @@ function TrendingMovieList() {
     data,
     isFetching,
     isPreviousData,
-  } = useQuery(["trendin movies", page], () => getTrending(page), {
+  } = useQuery(["trending movies", page], () => getTrending(page), {
     keepPreviousData: true,
   });
 
@@ -28,31 +30,14 @@ function TrendingMovieList() {
         ) : isError ? (
           <div>Error: {error}</div>
         ) : (
-          <div>
+          <div className="flex w-screen">
             {data.results.map((result) => (
-              <p key={result.id}>{result.title}</p>
+              <p key={result.id}>
+                <SimpleMovieCard movie={result} />
+              </p>
             ))}
           </div>
         )}
-        <span>Current Page: {page + 1}</span>
-        <button
-          onClick={() => setPage((old) => Math.max(old - 1, 1))}
-          disabled={page === 1}
-        >
-          Previous Page
-        </button>{" "}
-        <button
-          onClick={() => {
-            if (!isPreviousData) {
-              setPage((old) => old + 1);
-            }
-          }}
-          // Disable the Next Page button until we know a next page is available
-          disabled={isPreviousData}
-        >
-          Next Page
-        </button>
-        {isFetching ? <span> Loading...</span> : null}{" "}
       </div>
     </div>
   );
