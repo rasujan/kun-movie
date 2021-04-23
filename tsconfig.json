@@ -20,6 +20,11 @@
       "@/types/*": ["types/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/TrendingMoviesTable/TrendingMoviesTable.tsx.bck"
+  ],
   "exclude": ["node_modules"]
 }

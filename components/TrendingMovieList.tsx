@@ -31,7 +31,7 @@ function TrendingMovieList() {
           <div>Error: {error}</div>
         ) : (
           <div className="flex w-screen">
-            {data.results.map((result) => (
+            {data.results.map((result: any) => (
               <p key={result.id}>
                 <SimpleMovieCard movie={result} />
               </p>
